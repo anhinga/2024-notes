@@ -3,4 +3,6 @@
 The text attracted quite a bit of interest among potential reviewers, with 18 people submitting their votes (12 "yes", 6 "no") and 10 of those
 people writing comments (5 of those comments were long, and my comment was particularly long).
 
-I am posting my comment here, and I'll add further links when they appear.
+I am posting my comment here: [AI-consciousness-comment.md](AI-consciousness-comment.md)
+
+I'll add further links when they appear.
