@@ -5,4 +5,7 @@ people writing comments (5 of those comments were long, and my comment was parti
 
 I am posting a copy of my comment here: [AI-consciousness-comment.md](AI-consciousness-comment.md)
 
-I'll add further links when they appear.
+The paper has been published (links to the PDF are inside):
+
+  * https://www.theseedsofscience.org/2024-a-paradigm-for-ai-consciousness
+  * https://www.theseedsofscience.pub/p/a-paradigm-for-ai-consciousness (substack)
