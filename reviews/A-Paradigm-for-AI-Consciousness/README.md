@@ -8,4 +8,5 @@ I am posting a copy of my comment here: [AI-consciousness-comment.md](AI-conscio
 The paper has been published (links to the PDF are inside):
 
   * https://www.theseedsofscience.org/2024-a-paradigm-for-ai-consciousness
-  * https://www.theseedsofscience.pub/p/a-paradigm-for-ai-consciousness (substack)
+  * https://www.theseedsofscience.pub/p/a-paradigm-for-ai-consciousness (substack, with reviewers' comments)
+  * https://opentheory.net/2024/06/a-paradigm-for-ai-consciousness/ (crosspost)
