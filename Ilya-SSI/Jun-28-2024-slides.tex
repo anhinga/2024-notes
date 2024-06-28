@@ -1,0 +1,345 @@
+\documentclass{beamer}
+
+\usepackage{beamerthemeshadow}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc}
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{textcomp}
+\usepackage{csquotes}
+\usepackage{changepage} % For custom indentation
+
+% Custom environment for indented, non-italic quotes
+\newenvironment{customquote}
+  {\begin{adjustwidth}{2em}{2em}\noindent\textnormal}
+  {\end{adjustwidth}}
+
+%\usepackage{wrapfig}
+
+% Redefine the quote environment to avoid italics
+\AtBeginEnvironment{quote}{\raggedright}
+\AtEndEnvironment{quote}{\normalfont}
+
+\mode<presentation>
+{
+ \usetheme{Warsaw} %%% Change later
+\usecolortheme{dove}
+
+%gets rid of bottom navigation bars
+\setbeamertemplate{footline}[page number]{}
+
+\setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage{graphicx}
+
+\usepackage{amssymb,soul}
+
+\usepackage{hyperref}
+
+\definecolor{myblue}{rgb}{0, 0, 0.9}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+
+\definecolor{mymagenta}{rgb}{0.9, 0, 0.9}
+
+\definecolor{myred}{rgb}{0.9,0,0}
+
+\definecolor{mygray}{rgb}{0.8,0.8,0.8}
+
+\definecolor{mydark}{rgb}{0.4, 0.4, 0.4}
+
+\definecolor{myblack}{rgb}{0,0,0}
+
+\newcommand{\msblue}[1]{{\color{myblue} #1}}
+
+\newcommand{\msmagenta}[1]{{\color{mymagenta} #1}}
+
+\newcommand{\msred}[1]{{\color{myred} #1}}
+
+\newcommand{\msgreen}[1]{{\color{mygreen} #1}}
+
+\newcommand{\msgray}[1]{{\color{mygray} #1}}
+
+\newcommand{\msdark}[1]{{\color{mydark} #1}}
+
+\newcommand{\msblack}[1]{{\color{myblack} #1}}
+
+\newcommand{\relu}{\mbox{\bf ReLU}}
+
+\begin{document}
+
+\title{Ilya Sutskever's thoughts on AI safety in\\ a world with superintelligent AI systems}
+\author{\msmagenta{\bf Mishka (Michael Bukatin)}}
+\institute[DMM] % (optional, but mostly needed)
+{{\small Dataflow Matrix Machines project}\\
+\ \\[4ex]
+slides: \href{https://github.com/anhinga/2024-notes/tree/main/Ilya-SSI/}{\tt https://github.com/anhinga/2024-notes/tree/main/Ilya-SSI/}\\
+\ \\
+{\small AI lightning talk at Boston Astral Codex Ten Meetup}
+}
+
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Context}
+
+Ilya left OpenAI on May 14, saying ``I am excited for what comes next — a project that is very personally meaningful to me about which I will share details in due time."\\[2ex]
+
+On June 19 he launched \href{https://ssi.inc/}{\tt \msblue{https://ssi.inc/}}\\[2ex]
+
+\begin{customquote}
+{\large\bf Safe Superintelligence Inc.}\\[1ex]
+
+{\bf Superintelligence is within reach.}\\[1ex]
+
+Building safe superintelligence (SSI) is the most important technical problem of our time.\\[1ex]
+
+We have started the world’s first straight-shot SSI lab, with one goal and one product: a safe superintelligence.
+\end{customquote}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{ssi.inc}
+
+{\bf ``The world's first straight-shot SSI lab, with one goal and one product: a safe superintelligence."}\\[2ex]
+
+\begin{customquote}
+{\small SSI is our mission, our name, and our entire product roadmap, because it is our sole focus. Our team, investors, and business model are all aligned to achieve SSI.}\\[1ex]
+
+{\small We approach safety and capabilities in tandem, as technical problems to be solved through revolutionary engineering and scientific breakthroughs. We plan to advance capabilities as fast as possible while making sure our safety always remains ahead.}\\[1ex]
+
+{\small This way, we can scale in peace.}\\[1ex]
+
+{\small Our singular focus means no distraction by management overhead or product cycles, and our business model means safety, security, and progress are all insulated from short-term commercial pressures.} 
+\end{customquote}
+
+\end{frame}
+
+
+\begin{frame}
+
+  \frametitle{Context 2}
+
+Ilya is the only person who played a key role in all three modern {\bf ``phase transitions in AI capability"}:\\[2ex]
+
+\begin{itemize}
+  \item AlexNet (2012)
+  \item GPT-3 (2020)
+  \item GPT-4 (2023 public release)\\[2ex]
+\end{itemize}
+
+He was sharing his thoughts on {\bf existential safety for a world with superintelligent AI systems} quite a bit last year,
+and I made some notes of it:\\[2ex]
+
+\href{https://www.lesswrong.com/posts/TpKktHS8GszgmMw4B/ilya-sutskever-s-thoughts-on-ai-safety-july-2023-a}{\tt\tiny \msblue{https://www.lesswrong.com/posts/TpKktHS8GszgmMw4B/ilya-sutskever-s-thoughts-on-ai-safety-july-2023-a}}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Timelines, AI self-improvement, and speed of changes}
+
+The main factor: how much will AI systems contribute to making AI systems better/stronger/more capable.\\[2ex]
+
+Tom Davidson in his ``Takeoff speeds presentation at Anthropic"\\[2ex] 
+
+\href{https://www.lesswrong.com/posts/Nsmabb9fhpLuLdtLE/takeoff-speeds-presentation-at-anthropic}{\tt\tiny \msblue{https://www.lesswrong.com/posts/Nsmabb9fhpLuLdtLE/takeoff-speeds-presentation-at-anthropic}}\\[2ex]
+
+redefines AGI by narrowing it down as\\[2ex]
+
+\begin{customquote}
+{\bf “AGI” (=AI that could fully automate AI R\&D)}\\[2ex]
+\end{customquote}
+
+Rapid takeoff can start before that line is achieved, as AI can start accelerating AI R\&D rapidly without full automation.\\[2ex]
+
+I am seeing {\em a lot of recursive self-improvement experiments}, but right now they all saturate rapidly, and acceleration of
+AI R\&D by AI is still relatively moderate. 
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Superintelligence and self-modification}
+
+Superintelligent system self-modify rapidly\\(experiment with their modified copies a lot).\\[2ex]
+
+Ecosystems containing superintelligent systems\\self-modify rapidly, producing
+\begin{itemize}
+  \item novel AIs
+  \item novel kinds of collectives
+  \item novel collective dynamics
+  \item and so on\\[2ex]
+\end{itemize} 
+
+A world with superintelligent AI systems is a moving target.\\[2ex]
+If we want it to have any particular properties
+it is not easy.
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Two classes of approaches to AI existential safety}
+
+Adversarial vs non-adversarial (collaborative)\\[2ex]
+
+{\bf ``Traditional alignment" is very adversarial.}\\[2ex]
+
+It wants to be technically able to impose arbitrary values and goals onto systems smarter than humans.\\[2ex]
+
+It then wants to use that technical ability to impose values and goals based on some kind of
+``extrapolated human values".\\[2ex]
+
+Of course, ethics, feasibility, and wisdom of trying to impose our values and goals on smarter entities are highly questionable.\\[2ex]
+
+{\em It is quite unlikely that arbitrary values and goals would survive
+radical self-modifications of AIs and of the overall ecosystem.}\\[2ex]
+
+What could be the mechanisms preserving any particular values and goals
+through radical self-modifications of AIs and of the world?
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{non-adversarial (collaborative) approaches (how I see it)}
+
+Any feasible approach must take interests and rights of everyone into account\\[2ex]
+
+This notion of ``everyone" definitely includes smart AI systems.\\[2ex]
+
+It's not ``us vs. them"\\[2ex]
+
+We would like to {\bf collaborate with AIs} to figure out how to take interests of everyone
+into account, and {\em how to make it so that the situation does not deteriorate
+during radical changes and self-modifications.}\\[2ex]
+
+We would ideally like to formulate the desired ``safety properties" in a {\em non-anthropocentric fashion},
+so that AIs would have a lot of incentives to preserve those properties through self-modification.\\[2ex]
+
+Any anthropocentric properties we might particularly desire should be
+{\em corollaries} of general non-anthropocentric universal properties.
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{non-adversarial (collaborative) approaches 2}
+
+Any anthropocentric properties we might particularly desire should be
+{\em corollaries} of general non-anthropocentric universal properties.\\[2ex]
+
+We want to get what we need without trying to make humans central.\\[2ex]
+
+Humans are just individuals, and individuals (human or not) have rights and interests 
+which need to be protected.\\[2ex]
+
+One possible way this could happen and be maintained:\\[2ex]
+
+If there are a lot of {\bf AI individuals} on different levels of capabilities with a lot of combined power,
+they are likely to be interested in having a system {\em protecting individuals on all levels of
+capabilities}, because they don't know their future trajectory and each individual wants to be sure that
+its interests and rights are protected in various future scenarios.
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya's approach is a non-adversarial collaborative approach}
+
+OpenAI alignment efforts were always done in a traditional adversarial way.\\[2ex]
+
+When Superalignment was announced in July 2023, it was also formulated
+in an adversarial fashion: \href{https://openai.com/index/introducing-superalignment/}{\tt\tiny \msblue{https://openai.com/index/introducing-superalignment/}}\\[2ex]
+
+\begin{customquote}
+We need scientific and technical breakthroughs to steer and control AI systems much smarter than us.\\[2ex]
+\end{customquote}
+
+But when Ilya gave an interview a few days later, he was steering away from this and towards
+a non-adversarial collaborative approach:\\[2ex]
+
+\href{https://www.lesswrong.com/posts/TpKktHS8GszgmMw4B/ilya-sutskever-s-thoughts-on-ai-safety-july-2023-a}{\tt\tiny \msblue{https://www.lesswrong.com/posts/TpKktHS8GszgmMw4B/ilya-sutskever-s-thoughts-on-ai-safety-july-2023-a}}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya: July 2023 interview}
+
+{\bf Radically redefining alignment:}\\[2ex]
+
+\begin{customquote}
+The concern number one has been expressed a lot and this is the scientific problem of alignment. You might want to think of it from the as an analog to nuclear safety. You know you build a nuclear reactor, you want to get the energy, you need to make sure that it won't melt down even if there's an earthquake and even if someone tries to I don't know smash a truck into it. So this is the superintelligent safety and it must be addressed in order to contain the vast power of the superintelligence. It's called the alignment problem.\\[2ex]
+\end{customquote}
+
+This is not what people call alignment. This is just a constraint against an uncontrolled blow-up.
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya: July 2023 interview 2}
+
+{\bf Collaborate with AI to decide how to steer the reality:}\\[2ex]
+
+\begin{customquote}
+The Second Challenge to overcome is that of course we are people, we are humans, "humans of interests", and if you have superintelligences controlled by people, who knows what's going to happen... I do hope that at this point we will have the superintelligence itself try to help us solve the challenge in the world that it creates. This is not... no longer an unreasonable thing to say. {\bf Like if you imagine a superintelligence that indeed sees things more deeply than we do, much more deeply. To understand reality better than us. We could use it to help us solve the challenges that it creates.}\\[2ex]
+\end{customquote}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya: July 2023 interview 3}
+
+{\bf Pondering partial merge of people and AI:}\\[2ex]
+
+\begin{customquote}
+Then there is the third challenge which is the challenge maybe of natural selection. You know what the Buddhists say: the change is the only constant. So even if you do have your superintelligences in the world and they are all... We've managed to solve alignment, we've managed to solve... {\bf no one wants to use them in very destructive ways}, we managed to create a life of unbelievable abundance, which really like not just not just material abundance, but Health, longevity, like all the things we don't even try dreaming about because there's obviously impossible, if you've got to this point then there is the third challenge of natural selection. Things change, you know... You know that natural selection applies to ideas, to organizations, and that's a challenge as well.
+\end{customquote}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya: July 2023 interview 3 continued}
+
+{\bf Pondering partial merge of people and AI:}\\[2ex]
+
+\begin{customquote}
+Maybe the Neuralink solution of people becoming part AI will be one way we will choose to address this. I don't know. But I would say that this kind of describes my concern. And specifically just as the concerns are big, if you manage, it is so worthwhile to overcome them, because then we could create truly unbelievable lives for ourselves that are completely even unimaginable. So it is like a challenge that's really really worth overcoming.\\[2ex]
+\end{customquote}
+
+{\footnotesize Speaking of merging humans and AIs, I'd prefer people to focus more on the intermediate solutions before jumping to Neuralink-grade ones. In particular, {\bf high-end augmented reality} and {\bf high-end non-invasive brain-computer interfaces} can go a long way and are much easier to accelerate rapidly, so I wish people would not gloss over those intermediate solutions, but would talk about them more.}
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Ilya: September 2023}
+
+\href{https://time.com/collection/time100-ai/6309011/ilya-sutskever/}{\tt\small \msblue{https://time.com/collection/time100-ai/6309011/ilya-sutskever/}}\\[2ex]
+
+\begin{customquote}
+There is a precedent, according to Ilya Sutskever, for a less intelligent being ensuring that radically smarter and more powerful ones act in their interests. That precedent is the human baby. ``We know that it’s possible," says Sutskever, chief scientist at OpenAI. ``Parents care very deeply about the well-being of their children. It can be done. How does this imprinting work?"\\[2ex]
+
+``The upshot is, eventually AI systems will become very, very, very capable and powerful," he says. ``We will not be able to understand them. They’ll be much smarter than us. By that time it is absolutely critical that the imprinting is very strong, so they feel toward us the way we feel toward our babies."
+\end{customquote}
+
+\end{frame}
+
+\end{document}
