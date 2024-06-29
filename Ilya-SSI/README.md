@@ -9,7 +9,7 @@ Given at https://www.meetup.com/boston-astral-codex-meetup/events/301038407/ (Ju
 There are, roughly speaking, two classes of approaches to AI existential safety, 
 adversarial and non-adversarial (collaborative).
 
-OpenAI approach, including Superalignment, has always been the traditional alignment approach
+OpenAI's approach, including Superalignment, has always been a variant of the traditional alignment approach
 which is quite adversarial.
 
 However, Ilya himself prefers non-adversarial collaborative approach to AI existential safety.
