@@ -40,9 +40,9 @@ Michael A. Bukatin
 
 
 \vspace{0.085in}
-December 24, 2024\footnote{Version 2.5. Version 2.0 (08-07-20) is at
-\href{https://github.com/anhinga/2020-notes/tree/master/research-agenda}
-{\tt https://github.com/anhinga/2020-notes/tree/master/research-agenda}}
+December 24, 2024\footnote{Version 2.6. Version 2.4 (09-28-2022) is at
+\href{https://github.com/anhinga/2021-notes/tree/master/research-agenda}
+{\tt https://github.com/anhinga/2021-notes/tree/master/research-agenda}}
 
 \end{center}
 
@@ -92,11 +92,19 @@ In this note, I provide a bit more details and key references for some of the pr
 interdisciplinary research directions I see at the moment. I hope readers from various
 fields would find this of interest.
 
+The first version of this note written 5 years ago was very compact, just 4 
+pages\footnote{Version 1 (12-27-2024) is at \href{https://github.com/anhinga/2019-design-notes/tree/master/research-agenda}
+{\tt https://github.com/anhinga/2019-design-notes/tree/master/research-agenda}}. 
+There is more material now, and larger diversity of ongoing projects. So this text needs to be
+restructured in order to stay usable.
+
 \vspace{-0.2in}
 
 \tableofcontents
 
-\section{Background: how they work}
+\section{Dataflow matrix machines: core material}
+
+\subsection{Background: how they work}
 
 The essence of neural model of computations is that linear and non-linear computations are interleaved. Hence, the natural
 degree of generality for neuromorphic computations is to work not with streams of numbers, but with arbitrary streams
@@ -138,7 +146,7 @@ GitHub Pages: \href{https://anhinga.github.io/}{\tt https://anhinga.github.io}
 
 Open source implementation (Clojure): \href{https://github.com/jsa-aerial/DMM}{\tt https://github.com/jsa-aerial/DMM}
 
-\section{Conventional programming and program synthesis} The dimension of the network and the dimension
+\subsection{Conventional programming and program synthesis} The dimension of the network and the dimension
 of data are decoupled, so compact neural machines for solving conventional programming problems are available.
 For example, by considering streams of maps from words to numbers, one can build a dataflow matrix machine
 counting words in a given text which uses only a few neurons 
@@ -173,7 +181,7 @@ First successful experiments in program synthesis/circuit synthesis/DMM synthesi
 were performed in June 2022\footnote{See {\tt history.md} at
 \href{https://github.com/anhinga/DMM-synthesis-lab-journal}{\tt https://github.com/anhinga/DMM-synthesis-lab-journal}}.
 
-\section{Self-modification, learning to learn, and neuroevolution} \label{sec:selfref}
+\subsection{Self-modification, learning to learn, and neuroevolution} \label{sec:selfref}
 
 Using neural networks for metalearning
 is always non-trivial. In particular, dimension mismatch, namely the number of neuron outputs 
@@ -211,56 +219,88 @@ In our software experiments, we used self-modification facilities to
      \item edit a running network on the fly by sending it requests to edit itself (in particular, this enables {\bf livecoding}, but this is also quite open-ended, since it enables a population of networks to tell each other to modify themselves; of course, the receiving network doesn't have to follow an incoming instruction to self-modify blindly, although in the most simple-minded case it would do so; see Section 1.1 of our 11-2018 technical report, \href{https://www.cs.brandeis.edu/~bukatin/dmm-notes-2018.pdf}{\tt dmm-notes-2018.pdf}).
   \end{itemize}
 
-\section{Dynamical systems based on DMMs and emerging properties}
+\section{Advanced AI systems}
 
-The dynamical systems based on dataflow
-matrix machines exhibit a variety of interesting emerging properties. We conducted two series of experimental studies which yielded interesting emerging properties. These experiments were implemented in Processing programming language.
+\subsection{DMMs and Transformers}
 
-The first series of experiments was conducted in August 2015 and involved continuous cellular automata (see Section 4 of the preprint introducing the class of neural machines which we later started to call DMMs, \href{https://arxiv.org/abs/1601.01050}{\tt https://arxiv.org/abs/1601.01050}). The following videos show some of the emerging patterns we observed:
+There are extremely interesting connections between DMMs and Transformers and other
+attention-based models. We started to make rough sketches exploring those connection available\footnote{\href
+{https://github.com/anhinga/2020-notes/tree/master/attention-based-models}
+{\tt https://github.com/anhinga/2020-notes/tree/master/attention-based-models}} beginning in July 2020, and
+we are going to add a brief summary here.
+
+Transformers are models with multi-layer attention mechanism which have been introduced 
+3 years ago\footnote{A.~Vaswani et al., {\em Attention Is All You Need}, June 2017,
+\href{https://arxiv.org/abs/1706.03762}{\tt https://arxiv.org/abs/1706.03762}}. Their
+attention mechanism is based on linear combinations of high-dimensional
+vectors and the representations of those linear combinations via matrix multiplication.
+
+Transformers are the only widely known subclass of DMMs built around linear combinations of high-dimensional
+vectors. Note, that the transition from linear combinations of numbers to linear combinations of high-dimensional vectors
+on the level of single neurons is the key factor responsible for increased expressive power of
+DMMs compared to RNNs.
+
+However, that is where the similarities between Transformers and DMMs end so far. 
+Transformers is the leading state-of-the-art architecture
+with demonstrated remarkable capabilities to train and learn, whereas DMMs is a formalism with very interesting
+and remarkable expressive powers, but without any track record in terms of training and learning at this
+point in time.
+
+The Transformers were introduced with relatively
+modest goals of faithfully capturing long-range connections in data and enhancing parallelization capabilities
+during training, but it soon became apparent that their actual capabilities go well beyond that. In particular,
+it turned out that when one trains sufficiently large Transformers on a diverse natural language corpus
+in an unsupervised fashion for a task of predicting an excised word, these models capture deep hidden structure present
+in data and
+useful for this kind of prediction. In particular, it turns out that Transformers learn natural language grammar quite
+well in this scenario, as demonstrated both by surface performance of many models of this class and by
+investigation of their internal structure\footnote{E.g. A.~Coenen et al., {\em Visualizing and Measuring the Geometry of BERT}, June 2019, \href{https://arxiv.org/abs/1906.02715}{\tt https://arxiv.org/abs/1906.02715}}.
+
+The initial training of Transformers tends to be quite costly, but their adaptation (``fine-tuning") to new tasks
+tends to be relatively inexpensive. So one can say that there is ``hidden meta-learning" which is built into
+this architecture: after initial pretraining the model's ability to learn new things increases greatly.
+
+These impressive capabilities were taken to an entirely new level with the introduction of GPT-3 and OpenAI API in
+May-June of this year\footnote{See, for example, my note at \href{https://www.cs.brandeis.edu/~bukatin/transformer\_revolution.html}{\tt https://www.cs.brandeis.edu/$\sim$bukatin/transformer\_revolution.html}}. I think the community is only at the beginning
+of the quest to understand why this architecture and especially its GPT-3 incarnation work so well\footnote{As of early August 2020 when I was writing this; the flood of Transformer-related literature and Transformer-related advances has been rather overwhelming in the last year, and adequately monitoring
+and summarizing Transformer-related research has to be a group effort these days.}.
+
+It's quite promising at this point to consider interplay between attention-based models including Transformers and
+other approaches. Hybrid approaches of this kind are bringing progress along multiple axes\footnote{For example,
+the AlphaFold 2 model is a hybrid model with attention-based elements playing some of the key roles.}.
+
+We started an exploration of connections between DMMs and Transformers in July 2020\footnote{\href
+{https://github.com/anhinga/2020-notes/tree/master/attention-based-models}
+{\tt https://github.com/anhinga/2020-notes/tree/master/attention-based-models}}. So far, we have been focusing this exploration
+along two dimensions:
 
 \begin{itemize}
-   \item \href{https://youtu.be/KZHQxdZUlSU}{\tt https://youtu.be/KZHQxdZUlSU}
-   \item \href{https://youtu.be/-pFil1\_GEA4}{\tt https://youtu.be/-pFil1\_GEA4}
+   \item Could what we know about DMMs shed some light on the remarkable properties of Transformers?
+   \item What are the ways to incorporate key elements from Transformer architecture into a more flexible DMM setup, 
+           and, in particular, could we obtain interesting compact and low training cost models by 
+           incorporating attention-inspired and Transformer-inspired motives into DMMs?
 \end{itemize}
 
-The second series of experiments was conducted in 2016-2018 and involved ``pure lightweight dataflow machines" (see Section 1.2 of our 11-2018 technical report, 
-\href{https://www.cs.brandeis.edu/~bukatin/dmm-notes-2018.pdf}{\tt dmm-notes-2018.pdf}).
-We observed, for example, the following emerging patterns:
+In particular, we have been taking a closer look at the properties of matrix multiplication and at combining matrix multiplication and
+softmax together with other Transformer and DMM primitives to build small flexible neural machines. We have been exploring computational
+properties of those neural machines and solving selected machine learning problems involving those
+machines\footnote{\href {https://github.com/anhinga/2021-notes/tree/main/matrix-mult-machines}
+{\tt https://github.com/anhinga/2021-notes/tree/main/matrix-mult-machines}}.
 
-\begin{itemize}
-   \item \href{https://youtu.be/\_mZVVU8x3bs}{\tt https://youtu.be/\_mZVVU8x3bs} - emerging sleep-wake patterns
-   \item \href{https://youtu.be/CKVwsQEMNjY}{\tt https://youtu.be/CKVwsQEMNjY} - emerging oscillations
-\end{itemize}
+Some of our efforts in this direction were presented as a virtual poster at 
+JuliaCon 2021\footnote{Michael Bukatin.
+{\em Multiplying monochrome images as matrices: A*B and softmax.} 
+Virtual poster at JuliaCon 2021,\\
+July 2021. \href{https://github.com/anhinga/JuliaCon2021-poster}{\tt https://github.com/anhinga/JuliaCon2021-poster}}.
 
-This is a fertile setup to discover new emerging patterns of behavior, to study those patterns mathematically,
-and, perhaps, to eventually design novel emerging patterns of behavior.
+The flexibility afforded by the latest generation of machine learning frameworks such as
+Julia Flux and JAX is extremely helpful and saves a lot of coding labor for people exploring these classes of problems.
 
-\section{Synchronous vs. async, and artificial vs. biological neural nets}
+I believe this is an extremely promising direction and I advocate its further research and exploration.
 
-Like all neural machines, DMMs tend to be synchronous, because it is much easier to combine
-several streams with coefficients in the synchronous model of computations. As such, they have affinity with
-synchronous dataflow and functional reactive languages and libraries, such as, for example,
-{\tt Lucid Synchrone} programming language and {\tt Yampa} (a Haskell library).
+\section{Aspects of practical implementation}
 
-By default, DMMs tend to provide extreme sparseness in connectivity patterns (``sparseness in space"),
-but not sparseness in time. 
-
-On the other hand, biological networks are asynchronous, providing sparseness in time, just like
-general dataflow programming tends to be asynchronous, and general functional reactive programming,
-in particular, tends to provide sparseness in time.
-
-At the same time, biological neural networks tend to be equipped with various synchronization mechanisms.
-E.g. on the lower level, mechanisms such as, for example, {\bf leaky integrate-and-fire} enable combining
-asynchronous inputs with coefficients. On higher levels, there are various mechanisms synchronizing firing times
-of different neurons (see, for example, research by the group led by Nancy Kopell at Boston University starting from
-around 2005 for various mathematical models of those mechanisms).
-
-Reconciling synchronous and asynchronous models of computation, and, in particular, borrowing from
-what we know about biological neural nets and bringing it into realm of artificial neural machines is
-an important direction. Just like all ``sparseness in time", it is also quite relevant to the field of low energy
-neural computations, which keeps growing in importance.
-
-\section{Flexibility vs. parallelization and optimization} 
+\subsection{Flexibility vs. parallelization and optimization} 
 
 Extreme flexibility of DMMs is provided by the use of V-values (flexible tensors with tree-shaped indices, 
 see Section 3 the DMM reference paper, \href{https://arxiv.org/abs/1712.07447}{\tt https://arxiv.org/abs/1712.07447}, for
@@ -351,7 +391,7 @@ First successful experiments in DMM training and in program synthesis/circuit sy
 were performed in June 2022 using Zygote.jl\footnote{See {\tt history.md} at
 \href{https://github.com/anhinga/DMM-synthesis-lab-journal}{\tt https://github.com/anhinga/DMM-synthesis-lab-journal}}.
 
-\section{DMMs vs. differentiable programming: a meta-learning aspect}
+\subsection{DMMs vs. differentiable programming: a meta-learning aspect}
 
 Given that DMMs are neural machines with general-purpose programming capabilities, using DMMs as a programming
 formalism would provide differentiable programming (``Software 2.0") capabilities\footnote{In this section we use 
@@ -379,7 +419,9 @@ Julia or Python; therefore one can start using various DMM-related methods withi
 framework without being purist and without
 waiting until one is in position to move one's whole Software 2.0 process entirely to DMMs. 
 
-\section{Links to fuzzy and multivalued logic of
+\section{Math: vector semantics, Scott domains, partial inconsistency}
+
+\subsection{Links to fuzzy and multivalued logic of
 partial inconsistency}
 
 The historical roots of dataflow matrix machines are in the synthesis of domains
@@ -408,7 +450,58 @@ on the bicontinuous domain in question for computations, and one can also use or
 At the same time, on the level of operational semantics we have a rich theory of self-referential dataflow
 matrix machines (see Section~\ref{sec:selfref} of the present text). What would constitute an adequate theory of reflexive bicontinuous domains in this context is an important open question.
 
-\section{DMMs and probabilistic programming}
+\section{Miscellaneous research topics}
+
+\subsection{Dynamical systems based on DMMs and emerging properties}
+
+The dynamical systems based on dataflow
+matrix machines exhibit a variety of interesting emerging properties. We conducted two series of experimental studies which yielded interesting emerging properties. These experiments were implemented in Processing programming language.
+
+The first series of experiments was conducted in August 2015 and involved continuous cellular automata (see Section 4 of the preprint introducing the class of neural machines which we later started to call DMMs, \href{https://arxiv.org/abs/1601.01050}{\tt https://arxiv.org/abs/1601.01050}). The following videos show some of the emerging patterns we observed:
+
+\begin{itemize}
+   \item \href{https://youtu.be/KZHQxdZUlSU}{\tt https://youtu.be/KZHQxdZUlSU}
+   \item \href{https://youtu.be/-pFil1\_GEA4}{\tt https://youtu.be/-pFil1\_GEA4}
+\end{itemize}
+
+The second series of experiments was conducted in 2016-2018 and involved ``pure lightweight dataflow machines" (see Section 1.2 of our 11-2018 technical report, 
+\href{https://www.cs.brandeis.edu/~bukatin/dmm-notes-2018.pdf}{\tt dmm-notes-2018.pdf}).
+We observed, for example, the following emerging patterns:
+
+\begin{itemize}
+   \item \href{https://youtu.be/\_mZVVU8x3bs}{\tt https://youtu.be/\_mZVVU8x3bs} - emerging sleep-wake patterns
+   \item \href{https://youtu.be/CKVwsQEMNjY}{\tt https://youtu.be/CKVwsQEMNjY} - emerging oscillations
+\end{itemize}
+
+This is a fertile setup to discover new emerging patterns of behavior, to study those patterns mathematically,
+and, perhaps, to eventually design novel emerging patterns of behavior.
+
+\subsection{Synchronous vs. async, and artificial vs. biological neural nets}
+
+Like all neural machines, DMMs tend to be synchronous, because it is much easier to combine
+several streams with coefficients in the synchronous model of computations. As such, they have affinity with
+synchronous dataflow and functional reactive languages and libraries, such as, for example,
+{\tt Lucid Synchrone} programming language and {\tt Yampa} (a Haskell library).
+
+By default, DMMs tend to provide extreme sparseness in connectivity patterns (``sparseness in space"),
+but not sparseness in time. 
+
+On the other hand, biological networks are asynchronous, providing sparseness in time, just like
+general dataflow programming tends to be asynchronous, and general functional reactive programming,
+in particular, tends to provide sparseness in time.
+
+At the same time, biological neural networks tend to be equipped with various synchronization mechanisms.
+E.g. on the lower level, mechanisms such as, for example, {\bf leaky integrate-and-fire} enable combining
+asynchronous inputs with coefficients. On higher levels, there are various mechanisms synchronizing firing times
+of different neurons (see, for example, research by the group led by Nancy Kopell at Boston University starting from
+around 2005 for various mathematical models of those mechanisms).
+
+Reconciling synchronous and asynchronous models of computation, and, in particular, borrowing from
+what we know about biological neural nets and bringing it into realm of artificial neural machines is
+an important direction. Just like all ``sparseness in time", it is also quite relevant to the field of low energy
+neural computations, which keeps growing in importance.
+
+\subsection{DMMs and probabilistic programming}
 
 Our preprint\footnote{M.~Bukatin. {\em Using streams of probabilistic samples in neural machines.} January 2020.\\
 \href{https://github.com/anhinga/2020-notes/tree/master/research-notes}{\tt https://github.com/anhinga/2020-notes/tree/master/research-notes}} describes mechanisms allowing to integrate externally generated streams of
@@ -439,8 +532,9 @@ Sampling DMMs might take  DMMs  used as probabilistic programs as inputs\footnot
 the self-referential world of DMMs there is no precise boundary between containing a subnetwork and taking a subnetwork as an input, as a DMM has facilities
 to take another network as an input and to incorporate it as a subnetwork on the fly.}.
 
+\section{Advanced human-computer interfaces and computer art}
 
-\section{Real-time functional programming: visual animation and virtual reality via composition
+\subsection{Real-time functional programming: visual animation and virtual reality via composition
 of unit generators}
 
 Dataflow matrix machines generalize digital audio synthesis based on composition of unit generators
@@ -471,82 +565,5 @@ data flows, and to leave the hardware-oriented optimization to the underlying sy
 I hope that collaboration between people specializing in visual effects and computer animation,
 people who understand how to compile flexible data flows and dynamic computation graphs to GPUs,
 and people who focus on DMMs will make this promise a reality.
-
-\section{DMMs and Transformers}
-
-There are extremely interesting connections between DMMs and Transformers and other
-attention-based models. We started to make rough sketches exploring those connection available\footnote{\href
-{https://github.com/anhinga/2020-notes/tree/master/attention-based-models}
-{\tt https://github.com/anhinga/2020-notes/tree/master/attention-based-models}} beginning in July 2020, and
-we are going to add a brief summary here.
-
-Transformers are models with multi-layer attention mechanism which have been introduced 
-3 years ago\footnote{A.~Vaswani et al., {\em Attention Is All You Need}, June 2017,
-\href{https://arxiv.org/abs/1706.03762}{\tt https://arxiv.org/abs/1706.03762}}. Their
-attention mechanism is based on linear combinations of high-dimensional
-vectors and the representations of those linear combinations via matrix multiplication.
-
-Transformers are the only widely known subclass of DMMs built around linear combinations of high-dimensional
-vectors. Note, that the transition from linear combinations of numbers to linear combinations of high-dimensional vectors
-on the level of single neurons is the key factor responsible for increased expressive power of
-DMMs compared to RNNs.
-
-However, that is where the similarities between Transformers and DMMs end so far. 
-Transformers is the leading state-of-the-art architecture
-with demonstrated remarkable capabilities to train and learn, whereas DMMs is a formalism with very interesting
-and remarkable expressive powers, but without any track record in terms of training and learning at this
-point in time.
-
-The Transformers were introduced with relatively
-modest goals of faithfully capturing long-range connections in data and enhancing parallelization capabilities
-during training, but it soon became apparent that their actual capabilities go well beyond that. In particular,
-it turned out that when one trains sufficiently large Transformers on a diverse natural language corpus
-in an unsupervised fashion for a task of predicting an excised word, these models capture deep hidden structure present
-in data and
-useful for this kind of prediction. In particular, it turns out that Transformers learn natural language grammar quite
-well in this scenario, as demonstrated both by surface performance of many models of this class and by
-investigation of their internal structure\footnote{E.g. A.~Coenen et al., {\em Visualizing and Measuring the Geometry of BERT}, June 2019, \href{https://arxiv.org/abs/1906.02715}{\tt https://arxiv.org/abs/1906.02715}}.
-
-The initial training of Transformers tends to be quite costly, but their adaptation (``fine-tuning") to new tasks
-tends to be relatively inexpensive. So one can say that there is ``hidden meta-learning" which is built into
-this architecture: after initial pretraining the model's ability to learn new things increases greatly.
-
-These impressive capabilities were taken to an entirely new level with the introduction of GPT-3 and OpenAI API in
-May-June of this year\footnote{See, for example, my note at \href{https://www.cs.brandeis.edu/~bukatin/transformer\_revolution.html}{\tt https://www.cs.brandeis.edu/$\sim$bukatin/transformer\_revolution.html}}. I think the community is only at the beginning
-of the quest to understand why this architecture and especially its GPT-3 incarnation work so well\footnote{As of early August 2020 when I was writing this; the flood of Transformer-related literature and Transformer-related advances has been rather overwhelming in the last year, and adequately monitoring
-and summarizing Transformer-related research has to be a group effort these days.}.
-
-It's quite promising at this point to consider interplay between attention-based models including Transformers and
-other approaches. Hybrid approaches of this kind are bringing progress along multiple axes\footnote{For example,
-the AlphaFold 2 model is a hybrid model with attention-based elements playing some of the key roles.}.
-
-We started an exploration of connections between DMMs and Transformers in July 2020\footnote{\href
-{https://github.com/anhinga/2020-notes/tree/master/attention-based-models}
-{\tt https://github.com/anhinga/2020-notes/tree/master/attention-based-models}}. So far, we have been focusing this exploration
-along two dimensions:
-
-\begin{itemize}
-   \item Could what we know about DMMs shed some light on the remarkable properties of Transformers?
-   \item What are the ways to incorporate key elements from Transformer architecture into a more flexible DMM setup, 
-           and, in particular, could we obtain interesting compact and low training cost models by 
-           incorporating attention-inspired and Transformer-inspired motives into DMMs?
-\end{itemize}
-
-In particular, we have been taking a closer look at the properties of matrix multiplication and at combining matrix multiplication and
-softmax together with other Transformer and DMM primitives to build small flexible neural machines. We have been exploring computational
-properties of those neural machines and solving selected machine learning problems involving those
-machines\footnote{\href {https://github.com/anhinga/2021-notes/tree/main/matrix-mult-machines}
-{\tt https://github.com/anhinga/2021-notes/tree/main/matrix-mult-machines}}.
-
-Some of our efforts in this direction were presented as a virtual poster at 
-JuliaCon 2021\footnote{Michael Bukatin.
-{\em Multiplying monochrome images as matrices: A*B and softmax.} 
-Virtual poster at JuliaCon 2021,\\
-July 2021. \href{https://github.com/anhinga/JuliaCon2021-poster}{\tt https://github.com/anhinga/JuliaCon2021-poster}}.
-
-The flexibility afforded by the latest generation of machine learning frameworks such as
-Julia Flux and JAX is extremely helpful and saves a lot of coding labor for people exploring these classes of problems.
-
-I believe this is an extremely promising direction and I advocate its further research and exploration.
 
 \end{document}
