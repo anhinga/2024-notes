@@ -40,7 +40,7 @@ Michael A. Bukatin
 
 
 \vspace{0.085in}
-December 25, 2024\footnote{Version 2.11 {\bf in progress towards Version 3.0, pages 1-8 are up to date}.\\Version 2.4 (09-28-2022) is at
+December 25, 2024\footnote{Version 3.0. Version 2.4 (09-28-2022) is at
 \href{https://github.com/anhinga/2021-notes/tree/master/research-agenda}
 {\tt https://github.com/anhinga/2021-notes/tree/master/research-agenda}}
 
@@ -168,10 +168,9 @@ should be more tractable than conventional program synthesis. When one works wit
 and converting a program sketch to a full program should be done by
 conventional methods of neural net training. 
 
-\vspace{0.1in}
-\noindent
+%\vspace{0.1in}
+%\noindent
 Dataflow matrix machines allow us  to combine
-
   \begin{itemize}
       \item aspects of {\em program synthesis} setup\\ (compact, human-readable programs);
       \item aspects of {\em program inference} setup\\ (continuous models defined by matrices).
@@ -506,18 +505,17 @@ The dynamical systems based on dataflow
 matrix machines exhibit a variety of interesting emerging properties. We conducted two series of experimental studies which yielded interesting emerging properties. These experiments were implemented in Processing programming language.
 
 The first series of experiments was conducted in August 2015 and involved continuous cellular automata (see Section 4 of the preprint introducing the class of neural machines which we later started to call DMMs, \href{https://arxiv.org/abs/1601.01050}{\tt https://arxiv.org/abs/1601.01050}). The following videos show some of the emerging patterns we observed:
-
 \begin{itemize}
    \item \href{https://youtu.be/KZHQxdZUlSU}{\tt https://youtu.be/KZHQxdZUlSU}
+   \vspace{-0.1in}
    \item \href{https://youtu.be/-pFil1\_GEA4}{\tt https://youtu.be/-pFil1\_GEA4}
 \end{itemize}
-
 The second series of experiments was conducted in 2016-2018 and involved ``pure lightweight dataflow machines" (see Section 1.2 of our 11-2018 technical report, 
 \href{https://www.cs.brandeis.edu/~bukatin/dmm-notes-2018.pdf}{\tt dmm-notes-2018.pdf}).
 We observed, for example, the following emerging patterns:
-
 \begin{itemize}
    \item \href{https://youtu.be/\_mZVVU8x3bs}{\tt https://youtu.be/\_mZVVU8x3bs} - emerging sleep-wake patterns
+   \vspace{-0.1in}
    \item \href{https://youtu.be/CKVwsQEMNjY}{\tt https://youtu.be/CKVwsQEMNjY} - emerging oscillations
 \end{itemize}
 
@@ -613,5 +611,19 @@ data flows, and to leave the hardware-oriented optimization to the underlying sy
 I hope that collaboration between people specializing in visual effects and computer animation,
 people who understand how to compile flexible data flows and dynamic computation graphs to GPUs,
 and people who focus on DMMs will make this promise a reality.
+
+\subsection{Non-invasive brain-computer interfaces and tight coupling}
+
+We are seeing good progress in non-invasive brain-computer interfaces (both in hardware and in software).
+
+The ability to read the state of a biological entity (including the ability to do so in real-time) is very tempting.
+So is the ability to influence it in real-time, especially if one has plenty of real-time feedback from the biological
+entity (resulting in tight coupling between a biological entity and an electronic circuit). Such a tight coupling is
+not without risks, even when interfaces are non-invasive.
+
+Some of the aspects of this line of thinking (its technical aspects, its potential, its risks and personal safety issues)
+are discussed in these design notes: 
+\href{https://github.com/anhinga/2021-notes/tree/main/mind-games}{\tt https://github.com/anhinga/2021-notes/tree/main/mind-games}
+
 
 \end{document}
