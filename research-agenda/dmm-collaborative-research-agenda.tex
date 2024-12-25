@@ -40,7 +40,7 @@ Michael A. Bukatin
 
 
 \vspace{0.085in}
-December 25, 2024\footnote{Version 2.7. Version 2.4 (09-28-2022) is at
+December 25, 2024\footnote{Version 2.8 {\bf in progress towards Version 3.0, pages 1-3 are up to date}.\\Version 2.4 (09-28-2022) is at
 \href{https://github.com/anhinga/2021-notes/tree/master/research-agenda}
 {\tt https://github.com/anhinga/2021-notes/tree/master/research-agenda}}
 
@@ -265,8 +265,9 @@ tends to be relatively inexpensive. So one can say that there is ``hidden meta-l
 this architecture: after initial pretraining the model's ability to learn new things increases greatly.
 
 These impressive capabilities were taken to an entirely new level with the introduction of GPT-3 and OpenAI API in
-May-June of this year\footnote{See, for example, my note at \href{https://www.cs.brandeis.edu/~bukatin/transformer\_revolution.html}{\tt https://www.cs.brandeis.edu/$\sim$bukatin/transformer\_revolution.html}}. I think the community is only at the beginning
-of the quest to understand why this architecture and especially its GPT-3 incarnation work so well\footnote{As of early August 2020 when I was writing this; the flood of Transformer-related literature and Transformer-related advances has been rather overwhelming in the last year, and adequately monitoring
+May-June of 2000\footnote{Two capabilities which were considered ``almost impossible" and ``being far in the future" were achieved,
+namely the ability to learn from one or few examples on the fly and the ability to often generate novel correct working pieces of software.
+See, for example, my note at \href{https://www.cs.brandeis.edu/~bukatin/transformer\_revolution.html}{\tt https://www.cs.brandeis.edu/$\sim$bukatin/transformer\_revolution.html}}. There has been a lot of progress in recent years in the quest to understand why this architecture and especially its GPT-3 incarnation and subsequent incarnations work so well\footnote{The flood of Transformer-related literature and Transformer-related advances has been rather overwhelming in recent years, and adequately monitoring
 and summarizing Transformer-related research has to be a group effort these days.}.
 
 It's quite promising at this point to consider interplay between attention-based models including Transformers and
@@ -276,13 +277,15 @@ the AlphaFold 2 model is a hybrid model with attention-based elements playing so
 We started an exploration of connections between DMMs and Transformers in July 2020\footnote{\href
 {https://github.com/anhinga/2020-notes/tree/master/attention-based-models}
 {\tt https://github.com/anhinga/2020-notes/tree/master/attention-based-models}}. So far, we have been focusing this exploration
-along two dimensions:
+along three dimensions:
 
 \begin{itemize}
    \item Could what we know about DMMs shed some light on the remarkable properties of Transformers?
    \item What are the ways to incorporate key elements from Transformer architecture into a more flexible DMM setup, 
            and, in particular, could we obtain interesting compact and low training cost models by 
            incorporating attention-inspired and Transformer-inspired motives into DMMs?
+   \item Using DMMs instead of Python programs as a more tractable form of scaffolding for Transformer models, resulting
+           in hybrid DMM-Transformer architecture.
 \end{itemize}
 
 In particular, we have been taking a closer look at the properties of matrix multiplication and at combining matrix multiplication and
@@ -300,7 +303,8 @@ July 2021. \href{https://github.com/anhinga/JuliaCon2021-poster}{\tt https://git
 The flexibility afforded by the latest generation of machine learning frameworks such as
 Julia Flux and JAX is extremely helpful and saves a lot of coding labor for people exploring these classes of problems.
 
-I believe this is an extremely promising direction and I advocate its further research and exploration.
+I believe that the interplay between DMMs and Transformers is an extremely promising direction and I advocate further research and exploration of
+various aspects of this topic.
 
 \section{Aspects of practical implementation}
 
