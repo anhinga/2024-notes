@@ -40,7 +40,7 @@ Michael A. Bukatin
 
 
 \vspace{0.085in}
-December 24, 2024\footnote{Version 2.6. Version 2.4 (09-28-2022) is at
+December 25, 2024\footnote{Version 2.7. Version 2.4 (09-28-2022) is at
 \href{https://github.com/anhinga/2021-notes/tree/master/research-agenda}
 {\tt https://github.com/anhinga/2021-notes/tree/master/research-agenda}}
 
@@ -178,8 +178,10 @@ Dataflow matrix machines allow us  to combine
   \end{itemize}
 
 First successful experiments in program synthesis/circuit synthesis/DMM synthesis via neural architecture search
-were performed in June 2022\footnote{See {\tt history.md} at
-\href{https://github.com/anhinga/DMM-synthesis-lab-journal}{\tt https://github.com/anhinga/DMM-synthesis-lab-journal}}.
+were performed in June 2022 and were presented at JuliaCon 2023\footnote{See
+\href{https://github.com/anhinga/DMM-synthesis-lab-journal/tree/main/JuliaCon2023-talk}{tt
+https://github.com/anhinga/DMM-synthesis-lab-journal/tree/main/JuliaCon2023-talk}}. This is an ongoing research
+project.
 
 \subsection{Self-modification, learning to learn, and neuroevolution} \label{sec:selfref}
 
@@ -238,7 +240,9 @@ vectors and the representations of those linear combinations via matrix multipli
 Transformers are the only widely known subclass of DMMs built around linear combinations of high-dimensional
 vectors. Note, that the transition from linear combinations of numbers to linear combinations of high-dimensional vectors
 on the level of single neurons is the key factor responsible for increased expressive power of
-DMMs compared to RNNs.
+DMMs compared to RNNs\footnote{One way to view DMMs is to think about them as {\em flexible attention machines},
+with every input node computing a linear combination of numbers in an RNN neuron being replaced by an attention
+device computing a linear combination of vectors.}.
 
 However, that is where the similarities between Transformers and DMMs end so far. 
 Transformers is the leading state-of-the-art architecture
