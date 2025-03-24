@@ -4,6 +4,10 @@ This is a continuation of
 
 https://github.com/anhinga/2023-notes
 
+This is continued at
+
+https://github.com/anhinga/2025-notes
+
 ---
 
 [research-notes](research-notes) include
